@@ -4,6 +4,8 @@ from .forms import PostForm, CommentForm
 
 from django.contrib import messages
 from django.core.urlresolvers import reverse
+from django.contrib.auth.decorators import login_required
+
 
 
 
@@ -12,10 +14,12 @@ def index(request):
     post_list = Post.objects.all()
     return render(request, 'blog/index.html', {'post_list':post_list})
 
+@login_required
 def detail(request, pk):
     post_detail = get_object_or_404(Post, pk=pk)
     return render(request, 'blog/detail.html', {'post_detail':post_detail})
 
+@login_required
 def post_new(request):
     if request.method == 'POST':
         form = PostForm(request.POST, request.FILES)
@@ -29,6 +33,7 @@ def post_new(request):
         form = PostForm()
     return render(request, 'blog/post_form.html', {'form': form})
 
+@login_required
 def post_edit(request, pk):
     post = get_object_or_404(Post, pk=pk)
 
@@ -44,6 +49,7 @@ def post_edit(request, pk):
         form = PostForm(instance=post)
     return render(request, 'blog/post_form.html', {'form': form})
 
+@login_required
 def comment_new(request, post_pk):
     post = get_object_or_404(Post, pk=post_pk)
 
@@ -60,6 +66,7 @@ def comment_new(request, post_pk):
         form = CommentForm()
     return render(request, 'blog/comment_form.html', {'form': form})
 
+@login_required
 def comment_edit(request, post_pk, comment_pk):
     comment = get_object_or_404(Comment, pk=comment_pk)
 

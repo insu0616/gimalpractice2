@@ -6,7 +6,8 @@ class Post(models.Model):
     title = models.CharField(max_length=200)
     content = models.TextField()
     author = models.ForeignKey(settings.AUTH_USER_MODEL)
-    view = models.IntegerField()
+    photo = models.FileField(default="")
+    view = models.IntegerField(default=0)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 

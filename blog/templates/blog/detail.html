@@ -12,6 +12,7 @@
         {{ post_detail.content }}<br><hr/>
         <div>
             <h2>덧글</h2>
+            <a href="{% url 'blog:comment_new' post_detail.pk %}">덧글달기</a>
             {% if post_detail.comment_set.all %}
                 {% for comment in post_detail.comment_set.all %}
                     <li>

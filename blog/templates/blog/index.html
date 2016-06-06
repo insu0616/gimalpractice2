@@ -5,7 +5,7 @@
     <div class="cont">
     {% for post in post_list %}
         <li>
-            <h1>{{ post.title }}</h1>
+            <h1><a href="{% url 'blog:detail' post.pk %}">{{ post.title }}</a></h1>
         </li>
     {% endfor %}
     </div>

@@ -1,0 +1,24 @@
+{% extends "blog/base.html" %}
+
+{% block content %}
+    <div class="row">
+        <h1>{{ post_detail.title }}</h1>
+        조회수: {{ post_detail.view }}
+        생성일: {{ post_detail.created_at }}<br>
+        수정일: {{ post_detail.updated_at }}<hr/>
+        <img src="{{ post_detail.photo.url }}"/><hr/>
+        {{ post_detail.content }}<br><hr/>
+        <div>
+            <h2>덧글</h2>
+            {% if post_detail.comment_set.all %}
+                {% for comment in post_detail.comment_set.all %}
+                    <li>
+                        {{ comment.commenter }}: {{ comment.message }}
+                    </li>
+                {% endfor %}
+            {% else %}
+                <h3> 등록된 덧글이 없습니다 </h3>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

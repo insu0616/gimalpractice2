@@ -3,7 +3,8 @@
 {% block content %}
     <div class="row">
         <h1>{{ post_detail.title }}</h1>
-        조회수: {{ post_detail.view }}
+        조회수: {{ post_detail.view }}<br>
+        작성자: {{ post_detail.author }}<br>
         생성일: {{ post_detail.created_at }}<br>
         수정일: {{ post_detail.updated_at }}<hr/>
         <img src="{{ post_detail.photo.url }}"/><hr/>

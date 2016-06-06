@@ -2,7 +2,8 @@
 
 {% block content %}
 <div class="row">
-    <div class="cont">
+    <div class="container">
+    <a href="{% url 'blog:post_new' %}" class="btn btn-success">글생성</a>
     {% for post in post_list %}
         <li>
             <h1><a href="{% url 'blog:detail' post.pk %}">{{ post.title }}</a></h1>

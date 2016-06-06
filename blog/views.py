@@ -1,5 +1,10 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from .models import Post, Comment
+from .forms import PostForm, CommentForm
+
+from django.contrib import messages
+from django.core.urlresolvers import reverse
+
 
 
 # Create your views here.
@@ -10,3 +15,18 @@ def index(request):
 def detail(request, pk):
     post_detail = get_object_or_404(Post, pk=pk)
     return render(request, 'blog/detail.html', {'post_detail':post_detail})
+
+
+
+def post_new(request):
+    if request.method == 'POST':
+        form = PostForm(request.POST, request.FILES)
+        if form.is_valid():
+            post = form.save(commit=False)
+            post.author = request.user
+            post.save()
+            messages.success(request, '글이 생성됐습니다.')
+            return redirect(reverse('blog:detail', args=[post.pk]))
+    else:
+        form = PostForm()
+    return render(request, 'blog/post_form.html', {'form': form})

@@ -16,8 +16,6 @@ def detail(request, pk):
     post_detail = get_object_or_404(Post, pk=pk)
     return render(request, 'blog/detail.html', {'post_detail':post_detail})
 
-
-
 def post_new(request):
     if request.method == 'POST':
         form = PostForm(request.POST, request.FILES)
@@ -29,4 +27,19 @@ def post_new(request):
             return redirect(reverse('blog:detail', args=[post.pk]))
     else:
         form = PostForm()
+    return render(request, 'blog/post_form.html', {'form': form})
+
+def post_edit(request, pk):
+    post = get_object_or_404(Post, pk=pk)
+
+    if request.method == 'POST':
+        form = PostForm(request.POST, request.FILES, instance=post)
+        if form.is_valid():
+            post = form.save(commit=False)
+            post.author = request.user
+            post.save()
+            messages.success(request, '글이 수정됐습니다.')
+            return redirect(reverse('blog:detail', args=[post.pk]))
+    else:
+        form = PostForm(instance=post)
     return render(request, 'blog/post_form.html', {'form': form})

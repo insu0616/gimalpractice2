@@ -2,6 +2,7 @@
 
 {% block content %}
     <div class="row">
+        <a href="{% url 'blog:post_edit' post_detail.pk %}">글수정</a>
         <h1>{{ post_detail.title }}</h1>
         조회수: {{ post_detail.view }}<br>
         작성자: {{ post_detail.author }}<br>
